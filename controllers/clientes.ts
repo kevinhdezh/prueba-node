@@ -28,6 +28,8 @@ export const postCliente = async(req:Request, res: Response)=>{
     
     const {body}= req;
 
+    console.log(body)
+
     try {
         const existeId= await Cliente.findOne({
             where:{

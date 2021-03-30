@@ -20,5 +20,9 @@ const CatTramites = connection_1.default.define('CatTramites', {
     timestamps: false,
     tableName: 'CatTramites'
 });
+// CatTramites.belogsTo(Cita);
+// Cita.belongsTo(CatTramites, {
+//     foreignKey: 'myFooId'
+//   });
 exports.default = CatTramites;
 //# sourceMappingURL=catTramites.js.map

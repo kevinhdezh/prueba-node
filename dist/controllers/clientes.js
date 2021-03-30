@@ -34,6 +34,7 @@ const getCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.getCliente = getCliente;
 const postCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
+    console.log(body);
     try {
         const existeId = yield cliente_1.default.findOne({
             where: {
