@@ -12,6 +12,9 @@ const Cita = db.define('Cita',{
     folio:{
         type: DataTypes.STRING
     },
+    fecha_registro:{
+        type: DataTypes.DATE
+    },
     fecha_cita:{
         type: DataTypes.DATE
     },

@@ -16,6 +16,9 @@ const Cita = connection_1.default.define('Cita', {
     folio: {
         type: sequelize_1.DataTypes.STRING
     },
+    fecha_registro: {
+        type: sequelize_1.DataTypes.DATE
+    },
     fecha_cita: {
         type: sequelize_1.DataTypes.DATE
     },

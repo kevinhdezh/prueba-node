@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import Cliente from '../models/cliente';
+import { Sequelize } from 'sequelize';
 
 
 export const getClientes = async(req:Request, res: Response)=>{
-
+    
     const clientes = await Cliente.findAll();
     res.json(clientes)
 }
@@ -30,23 +31,40 @@ export const postCliente = async(req:Request, res: Response)=>{
 
     console.log(body)
 
+    let persona={
+        id_cliente:0,
+        nombre: body.nombre,
+        apellido_paterno:body.apellido_paterno,
+        apellido_materno:body.apellido_materno,
+        domicilio:body.domicilio,
+        telefono:body.telefono,
+        correo: body.correo,
+        rfc: body.rfc
+    }
+
+    const id = await Cliente.max('id_cliente').then(max => {
+        return max as number;
+    });
+    persona.id_cliente=id+1;
+    
     try {
         const existeId= await Cliente.findOne({
             where:{
-                id_cliente: body.id_cliente
+                rfc: body.rfc
             }
         });
 
         if(existeId){
             return res.status(400).json({
-                msg: 'Ya existe un usuario con el id ' + body.id_cliente
+                msg: 'Ya existe un usuario con el rfc ' + body.rfc
             });
+        }else{
+            const cliente = new Cliente(persona);
+            await cliente.save();
+            res.json(cliente);
         }
 
-        const cliente = new Cliente(body);
-        await cliente.save();
-
-        res.json(cliente);
+        
         
     } catch (error) {
         console.log(error);

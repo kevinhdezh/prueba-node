@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -18,6 +37,8 @@ const cita_1 = __importDefault(require("../routes/cita"));
 const catTramite_1 = __importDefault(require("../routes/catTramite"));
 const catEstatus_1 = __importDefault(require("../routes/catEstatus"));
 const catLugares_1 = __importDefault(require("../routes/catLugares"));
+const moment = __importStar(require("moment-timezone"));
+require("moment/locale/es-us");
 const cors_1 = __importDefault(require("cors"));
 const connection_1 = __importDefault(require("../db/connection"));
 class Server {
@@ -37,6 +58,7 @@ class Server {
         this.middlewares();
         //definir rutas
         this.routes();
+        this.LoadTimeUtilities();
     }
     //bd
     dbConnection() {
@@ -69,6 +91,10 @@ class Server {
         this.app.listen(this.port, () => {
             console.log('Servidor corriendo en puerto ' + this.port);
         });
+    }
+    LoadTimeUtilities() {
+        moment.tz("America/Mexico_City");
+        moment.locale('es');
     }
 }
 exports.default = Server;

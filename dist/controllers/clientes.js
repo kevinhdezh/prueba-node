@@ -35,20 +35,36 @@ exports.getCliente = getCliente;
 const postCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     console.log(body);
+    let persona = {
+        id_cliente: 0,
+        nombre: body.nombre,
+        apellido_paterno: body.apellido_paterno,
+        apellido_materno: body.apellido_materno,
+        domicilio: body.domicilio,
+        telefono: body.telefono,
+        correo: body.correo,
+        rfc: body.rfc
+    };
+    const id = yield cliente_1.default.max('id_cliente').then(max => {
+        return max;
+    });
+    persona.id_cliente = id + 1;
     try {
         const existeId = yield cliente_1.default.findOne({
             where: {
-                id_cliente: body.id_cliente
+                rfc: body.rfc
             }
         });
         if (existeId) {
             return res.status(400).json({
-                msg: 'Ya existe un usuario con el id ' + body.id_cliente
+                msg: 'Ya existe un usuario con el rfc ' + body.rfc
             });
         }
-        const cliente = new cliente_1.default(body);
-        yield cliente.save();
-        res.json(cliente);
+        else {
+            const cliente = new cliente_1.default(persona);
+            yield cliente.save();
+            res.json(cliente);
+        }
     }
     catch (error) {
         console.log(error);

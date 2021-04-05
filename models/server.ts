@@ -4,8 +4,8 @@ import citaRoutes from '../routes/cita';
 import catTramiteRoutes from '../routes/catTramite';
 import catEstatusRoutes from '../routes/catEstatus';
 import catLugaresRoutes from '../routes/catLugares';
-
-
+import * as moment from 'moment-timezone';
+import 'moment/locale/es-us';
 import cors from 'cors';
 
 import db from '../db/connection';
@@ -33,6 +33,8 @@ class Server{
 
         //definir rutas
         this.routes();
+
+        this.LoadTimeUtilities();
 
     }
 
@@ -75,6 +77,13 @@ class Server{
             console.log('Servidor corriendo en puerto '+ this.port);
         })
     }
+
+    LoadTimeUtilities() {
+        moment.tz("America/Mexico_City");
+        moment.locale('es');
+    }
+
+    
 }
 
 export default Server;
